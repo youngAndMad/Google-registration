@@ -1,0 +1,38 @@
+server:
+  port: 9090
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        format-sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default-schema: public
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/google
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: id
+            client-secret: secret
+            redirect-uri: http://localhost:9090/login
+            scope: openid,email,profile
+            accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+            userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+            userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+            preferTokenInfo: true
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+      schema: classpath:session_tables.sql
